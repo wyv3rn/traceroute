@@ -1,5 +1,5 @@
 # traceroute
-Traceroute is a Python script that allows you to get traceroute results with associated geolocation information for each hop for a specified host from geographically distant source(s).
+Traceroute is a Python script that allows you to get traceroute results with associated geolocation information for each hop for a specified host from geographically distant source(s). Demo: [IP Address Lookup](https://dazzlepod.com/ip/) (under "Visual Traceroute" tab)
 
 ## Installation
 
@@ -13,112 +13,123 @@ Try the following from your Python interpreter:
     >>> traceroute = Traceroute(ip_address='8.8.8.8')
     >>> hops = traceroute.traceroute()
     >>> hops
-    [{'latitude': 40.3756, 'rtt': '0.862 ms', 'ip_address': '128.112.128.114', 'longitude': -74.6597, 'hop_num': 1}, {'latitude': 40.3756, 'rtt': '0.462 ms', 'ip_address': '128.112.12.22', 'longitude': -74.6597, 'hop_num': 2}, {'latitude': 40.3265, 'rtt': '8.374 ms', 'ip_address': '24.104.128.89', 'longitude': -75.3697, 'hop_num': 3}, {'latitude': 38.0, 'rtt': '21.010 ms', 'ip_address': '68.86.84.177', 'longitude': -97.0, 'hop_num': 4}, {'latitude': 38.0, 'rtt': '12.218 ms', 'ip_address': '68.86.86.70', 'longitude': -97.0, 'hop_num': 5}, {'latitude': 38.0, 'rtt': '31.103 ms', 'ip_address': '75.149.231.62', 'longitude': -97.0, 'hop_num': 6}, {'latitude': 37.4192, 'rtt': '14.752 ms', 'ip_address': '209.85.252.80', 'longitude': -122.0574, 'hop_num': 7}, {'latitude': 37.4192, 'rtt': '18.437 ms', 'ip_address': '72.14.238.18', 'longitude': -122.0574, 'hop_num': 9}, {'latitude': 37.4192008972168, 'rtt': '18.610 ms', 'ip_address': '72.14.238.70', 'longitude': -122.05740356445312, 'hop_num': 9}, {'latitude': 37.4192, 'rtt': '16.696 ms', 'ip_address': '72.14.238.18', 'longitude': -122.0574, 'hop_num': 9}, {'latitude': 37.4192, 'rtt': '24.441 ms', 'ip_address': '72.14.232.21', 'longitude': -122.0574, 'hop_num': 10}, {'latitude': 37.4192, 'rtt': '13.925 ms', 'ip_address': '216.239.49.149', 'longitude': -122.0574, 'hop_num': 10}, {'latitude': 37.4192, 'rtt': '19.800 ms', 'ip_address': '72.14.232.21', 'longitude': -122.0574, 'hop_num': 10}, {'latitude': 37.4192, 'rtt': '14.144 ms', 'ip_address': '8.8.8.8', 'longitude': -122.0574, 'hop_num': 11}]
-    >>> import json
-    >>> json.dumps(hops, indent=2)
-    '[\n  {\n    "latitude": 40.3756, \n    "rtt": "0.862 ms", \n    "ip_address": "128.112.128.114", \n    "longitude": -74.6597, \n    "hop_num": 1\n  }, \n  {\n    "latitude": 40.3756, \n    "rtt": "0.462 ms", \n    "ip_address": "128.112.12.22", \n    "longitude": -74.6597, \n    "hop_num": 2\n  }, \n  {\n    "latitude": 40.3265, \n    "rtt": "8.374 ms", \n    "ip_address": "24.104.128.89", \n    "longitude": -75.3697, \n    "hop_num": 3\n  }, \n  {\n    "latitude": 38.0, \n    "rtt": "21.010 ms", \n    "ip_address": "68.86.84.177", \n    "longitude": -97.0, \n    "hop_num": 4\n  }, \n  {\n    "latitude": 38.0, \n    "rtt": "12.218 ms", \n    "ip_address": "68.86.86.70", \n    "longitude": -97.0, \n    "hop_num": 5\n  }, \n  {\n    "latitude": 38.0, \n    "rtt": "31.103 ms", \n    "ip_address": "75.149.231.62", \n    "longitude": -97.0, \n    "hop_num": 6\n  }, \n  {\n    "latitude": 37.4192, \n    "rtt": "14.752 ms", \n    "ip_address": "209.85.252.80", \n    "longitude": -122.0574, \n    "hop_num": 7\n  }, \n  {\n    "latitude": 37.4192, \n    "rtt": "18.437 ms", \n    "ip_address": "72.14.238.18", \n    "longitude": -122.0574, \n    "hop_num": 9\n  }, \n  {\n    "latitude": 37.4192008972168, \n    "rtt": "18.610 ms", \n    "ip_address": "72.14.238.70", \n    "longitude": -122.05740356445312, \n    "hop_num": 9\n  }, \n  {\n    "latitude": 37.4192, \n    "rtt": "16.696 ms", \n    "ip_address": "72.14.238.18", \n    "longitude": -122.0574, \n    "hop_num": 9\n  }, \n  {\n    "latitude": 37.4192, \n    "rtt": "24.441 ms", \n    "ip_address": "72.14.232.21", \n    "longitude": -122.0574, \n    "hop_num": 10\n  }, \n  {\n    "latitude": 37.4192, \n    "rtt": "13.925 ms", \n    "ip_address": "216.239.49.149", \n    "longitude": -122.0574, \n    "hop_num": 10\n  }, \n  {\n    "latitude": 37.4192, \n    "rtt": "19.800 ms", \n    "ip_address": "72.14.232.21", \n    "longitude": -122.0574, \n    "hop_num": 10\n  }, \n  {\n    "latitude": 37.4192, \n    "rtt": "14.144 ms", \n    "ip_address": "8.8.8.8", \n    "longitude": -122.0574, \n    "hop_num": 11\n  }\n]'
+    [{'hostname': 'gigagate1', 'longitude': -74.6597, 'rtt': '0.700 ms', 'hop_num': 1, 'latitude': 40.3756, 'ip_address': '128.112.128.114'}, {'hostname': 'vgate1', 'longitude': -74.6597, 'rtt': '0.375 ms', 'hop_num': 2, 'latitude': 40.3756, 'ip_address': '128.112.12.22'}, {'hostname': 'te-1-4-3998-pe01.philadelphia.pa.ibone.comcast.net', 'longitude': -75.3697, 'rtt': '18.296 ms', 'hop_num': 3, 'latitude': 40.3265, 'ip_address': '24.104.128.89'}, {'hostname': 'te-0-1-0-12-cr01.ashburn.va.ibone.comcast.net', 'longitude': -97.0, 'rtt': '28.446 ms', 'hop_num': 4, 'latitude': 38.0, 'ip_address': '68.86.84.177'}, {'hostname': 'pos-0-2-0-0-pe01.ashburn.va.ibone.comcast.net', 'longitude': -97.0, 'rtt': '21.968 ms', 'hop_num': 5, 'latitude': 38.0, 'ip_address': '68.86.86.70'}, {'hostname': '75.149.231.62', 'longitude': -97.0, 'rtt': '20.685 ms', 'hop_num': 6, 'latitude': 38.0, 'ip_address': '75.149.231.62'}, {'hostname': '209.85.252.80', 'longitude': -122.0574, 'rtt': '18.383 ms', 'hop_num': 7, 'latitude': 37.4192, 'ip_address': '209.85.252.80'}, {'hostname': '209.85.252.46', 'longitude': -122.0574, 'rtt': '18.541 ms', 'hop_num': 7, 'latitude': 37.4192, 'ip_address': '209.85.252.46'}, {'hostname': '209.85.252.80', 'longitude': -122.0574, 'rtt': '19.723 ms', 'hop_num': 7, 'latitude': 37.4192, 'ip_address': '209.85.252.80'}, {'hostname': '72.14.238.82', 'longitude': -122.0574, 'rtt': '15.124 ms', 'hop_num': 9, 'latitude': 37.4192, 'ip_address': '72.14.238.82'}, {'hostname': '72.14.238.16', 'longitude': -122.0574, 'rtt': '15.564 ms', 'hop_num': 9, 'latitude': 37.4192, 'ip_address': '72.14.238.16'}, {'hostname': '216.239.49.149', 'longitude': -122.0574, 'rtt': '23.253 ms', 'hop_num': 10, 'latitude': 37.4192, 'ip_address': '216.239.49.149'}, {'hostname': 'google-public-dns-a.google.com', 'longitude': -122.0574, 'rtt': '13.020 ms', 'hop_num': 11, 'latitude': 37.4192, 'ip_address': '8.8.8.8'}]
     >>>
 
 You can also run the script directly by passing in the --ip_address option:
 
     $ python traceroute.py --ip_address=8.8.8.8
     [
-      {
-        "latitude": 40.3756,
-        "rtt": "0.862 ms",
-        "ip_address": "128.112.128.114",
-        "longitude": -74.6597,
-        "hop_num": 1
-      },
-      {
-        "latitude": 40.3756,
-        "rtt": "0.462 ms",
-        "ip_address": "128.112.12.22",
-        "longitude": -74.6597,
-        "hop_num": 2
-      },
-      {
-        "latitude": 40.3265,
-        "rtt": "8.374 ms",
-        "ip_address": "24.104.128.89",
-        "longitude": -75.3697,
-        "hop_num": 3
-      },
-      {
-        "latitude": 38.0,
-        "rtt": "21.010 ms",
-        "ip_address": "68.86.84.177",
-        "longitude": -97.0,
-        "hop_num": 4
-      },
-      {
-        "latitude": 38.0,
-        "rtt": "12.218 ms",
-        "ip_address": "68.86.86.70",
-        "longitude": -97.0,
-        "hop_num": 5
-      },
-      {
-        "latitude": 38.0,
-        "rtt": "31.103 ms",
-        "ip_address": "75.149.231.62",
-        "longitude": -97.0,
-        "hop_num": 6
-      },
-      {
-        "latitude": 37.4192,
-        "rtt": "14.752 ms",
-        "ip_address": "209.85.252.80",
-        "longitude": -122.0574,
-        "hop_num": 7
-      },
-      {
-        "latitude": 37.4192,
-        "rtt": "18.437 ms",
-        "ip_address": "72.14.238.18",
-        "longitude": -122.0574,
-        "hop_num": 9
-      },
-      {
-        "latitude": 37.4192008972168,
-        "rtt": "18.610 ms",
-        "ip_address": "72.14.238.70",
-        "longitude": -122.05740356445312,
-        "hop_num": 9
-      },
-      {
-        "latitude": 37.4192,
-        "rtt": "16.696 ms",
-        "ip_address": "72.14.238.18",
-        "longitude": -122.0574,
-        "hop_num": 9
-      },
-      {
-        "latitude": 37.4192,
-        "rtt": "24.441 ms",
-        "ip_address": "72.14.232.21",
-        "longitude": -122.0574,
-        "hop_num": 10
-      },
-      {
-        "latitude": 37.4192,
-        "rtt": "13.925 ms",
-        "ip_address": "216.239.49.149",
-        "longitude": -122.0574,
-        "hop_num": 10
-      },
-      {
-        "latitude": 37.4192,
-        "rtt": "19.800 ms",
-        "ip_address": "72.14.232.21",
-        "longitude": -122.0574,
-        "hop_num": 10
-      },
-      {
-        "latitude": 37.4192,
-        "rtt": "14.144 ms",
-        "ip_address": "8.8.8.8",
-        "longitude": -122.0574,
-        "hop_num": 11
-      }
+        {
+            "hostname": "gigagate1",
+            "longitude": -74.659700000000001,
+            "rtt": "0.922 ms",
+            "hop_num": 1,
+            "latitude": 40.375599999999999,
+            "ip_address": "128.112.128.114"
+        },
+        {
+            "hostname": "vgate1",
+            "longitude": -74.659700000000001,
+            "rtt": "0.381 ms",
+            "hop_num": 2,
+            "latitude": 40.375599999999999,
+            "ip_address": "128.112.12.22"
+        },
+        {
+            "hostname": "te-1-4-3998-pe01.philadelphia.pa.ibone.comcast.net",
+            "longitude": -75.369699999999995,
+            "rtt": "11.116 ms",
+            "hop_num": 3,
+            "latitude": 40.326500000000003,
+            "ip_address": "24.104.128.89"
+        },
+        {
+            "hostname": "te-0-1-0-12-cr01.ashburn.va.ibone.comcast.net",
+            "longitude": -97.0,
+            "rtt": "25.472 ms",
+            "hop_num": 4,
+            "latitude": 38.0,
+            "ip_address": "68.86.84.177"
+        },
+        {
+            "hostname": "pos-0-2-0-0-pe01.ashburn.va.ibone.comcast.net",
+            "longitude": -97.0,
+            "rtt": "18.210 ms",
+            "hop_num": 5,
+            "latitude": 38.0,
+            "ip_address": "68.86.86.70"
+        },
+        {
+            "hostname": "75.149.231.62",
+            "longitude": -97.0,
+            "rtt": "11.732 ms",
+            "hop_num": 6,
+            "latitude": 38.0,
+            "ip_address": "75.149.231.62"
+        },
+        {
+            "hostname": "209.85.252.80",
+            "longitude": -122.0574,
+            "rtt": "21.879 ms",
+            "hop_num": 7,
+            "latitude": 37.419199999999996,
+            "ip_address": "209.85.252.80"
+        },
+        {
+            "hostname": "72.14.238.70",
+            "longitude": -122.057403564453,
+            "rtt": "13.193 ms",
+            "hop_num": 9,
+            "latitude": 37.419200897216797,
+            "ip_address": "72.14.238.70"
+        },
+        {
+            "hostname": "72.14.238.16",
+            "longitude": -122.0574,
+            "rtt": "11.585 ms",
+            "hop_num": 9,
+            "latitude": 37.419199999999996,
+            "ip_address": "72.14.238.16"
+        },
+        {
+            "hostname": "72.14.238.82",
+            "longitude": -122.0574,
+            "rtt": "11.560 ms",
+            "hop_num": 9,
+            "latitude": 37.419199999999996,
+            "ip_address": "72.14.238.82"
+        },
+        {
+            "hostname": "216.239.49.145",
+            "longitude": -122.0574,
+            "rtt": "21.959 ms",
+            "hop_num": 10,
+            "latitude": 37.419199999999996,
+            "ip_address": "216.239.49.145"
+        },
+        {
+            "hostname": "72.14.232.25",
+            "longitude": -122.0574,
+            "rtt": "12.817 ms",
+            "hop_num": 10,
+            "latitude": 37.419199999999996,
+            "ip_address": "72.14.232.25"
+        },
+        {
+            "hostname": "216.239.49.145",
+            "longitude": -122.0574,
+            "rtt": "15.652 ms",
+            "hop_num": 10,
+            "latitude": 37.419199999999996,
+            "ip_address": "216.239.49.145"
+        },
+        {
+            "hostname": "google-public-dns-a.google.com",
+            "longitude": -122.0574,
+            "rtt": "12.514 ms",
+            "hop_num": 11,
+            "latitude": 37.419199999999996,
+            "ip_address": "8.8.8.8"
+        }
     ]

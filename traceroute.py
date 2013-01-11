@@ -8,7 +8,7 @@ for each hop for a specified host from geographically distant source(s).
 
 __author__ = 'Dazzlepod (info@dazzlepod.com)'
 __copyright__ = 'Copyright (c) 2013 Dazzlepod'
-__version__ = '$Revision: #11 $'
+__version__ = '$Revision: #12 $'
 
 import datetime
 import json
@@ -211,6 +211,7 @@ def main():
     if options.ip_address:
         traceroute = Traceroute(ip_address=options.ip_address, tmp_dir=options.tmp_dir, no_geo=options.no_geo, debug=options.debug)
         hops = traceroute.traceroute()
+        hops = json.dumps(hops, indent=4)
         print hops
     else:
         cmdparser.print_usage()
