@@ -8,7 +8,7 @@ for each hop for a specified host from geographically distant source(s).
 
 __author__ = 'Dazzlepod (info@dazzlepod.com)'
 __copyright__ = 'Copyright (c) 2013 Dazzlepod'
-__version__ = '$Revision: #7 $'
+__version__ = '$Revision: #11 $'
 
 import datetime
 import json
@@ -24,9 +24,11 @@ from subprocess import Popen, PIPE
 
 class Traceroute(object):
     """Traceroute instance."""
-    def __init__(self, ip_address='8.8.8.8', debug=False):
+    def __init__(self, ip_address='8.8.8.8', tmp_dir='/tmp', no_geo=False, debug=False):
         super(Traceroute, self).__init__()
         self.ip_address = ip_address
+        self.tmp_dir = tmp_dir
+        self.no_geo = no_geo
         self.debug = debug
         # cache geocoded IP addresses during the lifetime of this instance
         self.locations = {}
@@ -34,17 +36,17 @@ class Traceroute(object):
     def traceroute(self):
         """Instead of running the actual traceroute command, we will fetch
         standard traceroute results from several publicly available webpages
-        that are listed at traceroute.org.
-
-        For each hop, we will then attach geolocation information to it."""
+        that are listed at traceroute.org. For each hop, we will then attach
+        geolocation information to it."""
         self.print_debug("ip_address = %s" % self.ip_address)
-        if not os.path.exists('%s.txt' % self.ip_address):
+        txt = os.path.join(self.tmp_dir, '%s.txt' % self.ip_address)
+        if not os.path.exists(txt):
             (status_code, traceroute) = self.get_traceroute_output()
-            f = open('%s.txt' % self.ip_address, 'w')
+            f = open(txt, 'w')
             f.write(traceroute)
             f.close()
 
-        traceroute = open('%s.txt' % self.ip_address, 'r').read()
+        traceroute = open(txt, 'r').read()
 
         # hops = dicts with keys: hop_num, hosts
         hops = self.get_hops(traceroute)
@@ -52,11 +54,9 @@ class Traceroute(object):
         # hops = dicts with keys: hop_num, hostname, ip_address, rtt
         hops = self.get_formatted_hops(hops)
 
-        # hops = dicts with keys: hop_num, hostname, ip_address, rtt, location
-        hops = self.get_geocoded_hops(hops)
-
-        # hops = dicts with keys: hop_num, ip_address, latitude, longitude, rtt
-        hops = self.get_stripped_hops(hops)
+        if not self.no_geo:
+            # hops = dicts with keys: hop_num, hostname, ip_address, rtt, latitude, longitude
+            hops = self.get_geocoded_hops(hops)
 
         return hops
 
@@ -119,36 +119,29 @@ class Traceroute(object):
     def get_geocoded_hops(self, hops):
         """Return hops from get_formatted_hops() with geolocation information
         for each hop."""
+        geocoded_hops = []
+
         for hop in hops:
             ip_address = hop['ip_address']
+
             location = None
             if self.locations.has_key(ip_address):
                 location = self.locations[ip_address]
             else:
                 location = self.get_location(ip_address)
                 self.locations[ip_address] = location
-            hop['location'] = location
 
-        return hops
-
-    def get_stripped_hops(self, hops):
-        """ Return hops from get_geocoded_hops() with each dict containing
-        data ready for plotting with e.g. Google Maps JavaScript API."""
-        stripped_hops = []
-
-        for hop in hops:
-            if hop['location']:
-                lat = hop['location']['latitude']
-                lon = hop['location']['longitude']
-                stripped_hops.append({
+            if location:
+                geocoded_hops.append({
                     'hop_num': hop['hop_num'],
+                    'hostname': hop['hostname'],
                     'ip_address': hop['ip_address'],
-                    'latitude': lat,
-                    'longitude': lon,
                     'rtt': hop['rtt'],
+                    'latitude': location['latitude'],
+                    'longitude': location['longitude'],
                 })
 
-        return stripped_hops
+        return geocoded_hops
 
     def get_location(self, ip_address):
         """Return geolocation information for the specified IP address, e.g.:
@@ -171,7 +164,7 @@ class Traceroute(object):
                 location = tmp_location
         return location
 
-    def urlopen(self, url, context = None):
+    def urlopen(self, url, context=None):
         """Perform HTTP GET/POST on the specified URL and return the resultant
         status code and response.
         """
@@ -208,15 +201,16 @@ class Traceroute(object):
 def main():
     usage = """%prog --ip_address=IP_ADDRESS"""
     cmdparser = optparse.OptionParser(usage, version=("traceroute " + __version__))
-    cmdparser.add_option("-i", "--ip_address", type="string", default="", help="IP address of destination host")
-    cmdparser.add_option("-d", "--debug", action="store_true", default=False, help="Show debug output")
+    cmdparser.add_option("-i", "--ip_address", type="string", default="8.8.8.8", help="IP address of destination host (default: 8.8.8.8)")
+    cmdparser.add_option("-t", "--tmp_dir", type="string", default="/tmp", help="Temporary directory to store downloaded traceroute results (default: /tmp)")
+    cmdparser.add_option("-n", "--no_geo", action="store_true", default=False, help="No geolocation data (default: False)")
+    cmdparser.add_option("-d", "--debug", action="store_true", default=False, help="Show debug output (default: False)")
 
     (options, args) = cmdparser.parse_args()
 
     if options.ip_address:
-        traceroute = Traceroute(ip_address=options.ip_address, debug=options.debug)
+        traceroute = Traceroute(ip_address=options.ip_address, tmp_dir=options.tmp_dir, no_geo=options.no_geo, debug=options.debug)
         hops = traceroute.traceroute()
-        hops = json.dumps(hops, indent=2)
         print hops
     else:
         cmdparser.print_usage()
