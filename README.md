@@ -18,6 +18,22 @@ Try the following from your Python interpreter:
 
 You can also run the script directly by passing in the --ip_address option:
 
+    $ python traceroute.py --help
+    Usage: traceroute.py --ip_address=IP_ADDRESS
+
+    Options:
+      --version             show program's version number and exit
+      -h, --help            show this help message and exit
+      -i IP_ADDRESS, --ip_address=IP_ADDRESS
+                            IP address of destination host (default: 8.8.8.8)
+      -t TMP_DIR, --tmp_dir=TMP_DIR
+                            Temporary directory to store downloaded traceroute
+                            results (default: /tmp)
+      -n, --no_geo          No geolocation data (default: False)
+      -s TIMEOUT, --timeout=TIMEOUT
+                            Timeout in seconds for all downloads (default: 120)
+      -d, --debug           Show debug output (default: False)
+
     $ python traceroute.py --ip_address=8.8.8.8
     [
         {

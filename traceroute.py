@@ -8,13 +8,15 @@ for each hop for a specified host from geographically distant source(s).
 
 __author__ = 'Dazzlepod (info@dazzlepod.com)'
 __copyright__ = 'Copyright (c) 2013 Dazzlepod'
-__version__ = '$Revision: #12 $'
+__version__ = '$Revision: #13 $'
 
 import datetime
 import json
 import optparse
 import os
 import re
+import signal
+import socket
 import sys
 import urllib
 import urllib2
@@ -24,11 +26,12 @@ from subprocess import Popen, PIPE
 
 class Traceroute(object):
     """Traceroute instance."""
-    def __init__(self, ip_address='8.8.8.8', tmp_dir='/tmp', no_geo=False, debug=False):
+    def __init__(self, ip_address='8.8.8.8', tmp_dir='/tmp', no_geo=False, timeout=120, debug=False):
         super(Traceroute, self).__init__()
         self.ip_address = ip_address
         self.tmp_dir = tmp_dir
         self.no_geo = no_geo
+        self.timeout = timeout
         self.debug = debug
         # cache geocoded IP addresses during the lifetime of this instance
         self.locations = {}
@@ -65,10 +68,16 @@ class Traceroute(object):
 
         # Example from traceroute.org
         url = "http://www.net.princeton.edu/cgi-bin/traceroute.pl"
-        (status_code, response) = self.urlopen(url, context = {'target': self.ip_address})
+        (status_code, content) = self.urlopen(url, context = {'target': self.ip_address})
+        content = content.strip()
 
         pattern = re.compile(r'<pre.*?>(?P<traceroute>.*?)</pre>', re.DOTALL|re.IGNORECASE)
-        traceroute = re.findall(pattern, response)[0].strip()
+        try:
+            traceroute = re.findall(pattern, content)[0].strip()
+        except IndexError:
+            # Manually append closing </pre> for partially downloaded page
+            content = '%s</pre>' % content
+            traceroute = re.findall(pattern, content)[0].strip()
 
         return (status_code, traceroute)
 
@@ -166,19 +175,18 @@ class Traceroute(object):
 
     def urlopen(self, url, context=None):
         """Perform HTTP GET/POST on the specified URL and return the resultant
-        status code and response.
-        """
+        status code and response."""
         status_code = 200
-
         request = urllib2.Request(url = url)
-
         if context:
             data = urllib.urlencode(context)
             request.add_data(data)
 
-        response = ''
+        content = ''
         try:
-            response = urllib2.urlopen(request).read()
+            response = urllib2.urlopen(request)
+            self.print_debug("url = %s\nheader = %s" % (response.geturl(), response.info()))
+            content = self.chunked_read(response)
         except urllib2.HTTPError, e:
             status_code = e.code
         except urllib2.URLError:
@@ -190,7 +198,37 @@ class Traceroute(object):
             self.urlopen_count = 1
         self.print_debug("[%d] url = %s, status_code = %d" % (self.urlopen_count, url, status_code))
 
-        return (status_code, response)
+        return (status_code, content)
+
+    def chunked_read(self, response):
+        """Read page response in chunks. A signal handler is attached to abort
+        reading after the set timeout.
+        Chunk size = 1KB, max. page size = 1MB
+        """
+        content = ''
+        max_bytes = 1 * 1024 * 1024
+        completed_bytes = 0
+        bytes_per_read = 1024
+
+        try:
+            signal.signal(signal.SIGALRM, self.signal_handler)
+            signal.alarm(self.timeout)
+            while completed_bytes <= max_bytes:
+                data = response.read(bytes_per_read)
+                if not data:
+                    break
+                content += data
+                completed_bytes += bytes_per_read
+                self.print_debug("completed_bytes = %d, %s" % (completed_bytes, data))
+            signal.alarm(0)
+        except Exception, e:
+            self.print_debug("%s" % str(e))
+
+        return content
+
+    def signal_handler(self, signum, frame):
+        """Signal handler that simply raises an exception when triggered."""
+        raise Exception("Caught signal %d" % signum)
 
     def print_debug(self, msg):
         """Print debug message to standard output."""
@@ -204,12 +242,13 @@ def main():
     cmdparser.add_option("-i", "--ip_address", type="string", default="8.8.8.8", help="IP address of destination host (default: 8.8.8.8)")
     cmdparser.add_option("-t", "--tmp_dir", type="string", default="/tmp", help="Temporary directory to store downloaded traceroute results (default: /tmp)")
     cmdparser.add_option("-n", "--no_geo", action="store_true", default=False, help="No geolocation data (default: False)")
+    cmdparser.add_option("-s", "--timeout", type="int", default=120, help="Timeout in seconds for all downloads (default: 120)")
     cmdparser.add_option("-d", "--debug", action="store_true", default=False, help="Show debug output (default: False)")
 
     (options, args) = cmdparser.parse_args()
 
     if options.ip_address:
-        traceroute = Traceroute(ip_address=options.ip_address, tmp_dir=options.tmp_dir, no_geo=options.no_geo, debug=options.debug)
+        traceroute = Traceroute(ip_address=options.ip_address, tmp_dir=options.tmp_dir, no_geo=options.no_geo, timeout=options.timeout, debug=options.debug)
         hops = traceroute.traceroute()
         hops = json.dumps(hops, indent=4)
         print hops
