@@ -8,7 +8,7 @@ for each hop for a specified host from geographically distant source(s).
 
 __author__ = 'Dazzlepod (info@dazzlepod.com)'
 __copyright__ = 'Copyright (c) 2013 Dazzlepod'
-__version__ = '$Revision: #13 $'
+__version__ = '$Revision: #14 $'
 
 import datetime
 import json
@@ -203,12 +203,12 @@ class Traceroute(object):
     def chunked_read(self, response):
         """Read page response in chunks. A signal handler is attached to abort
         reading after the set timeout.
-        Chunk size = 1KB, max. page size = 1MB
+        Chunk size = 64 bytes, max. page size = 1MB
         """
         content = ''
         max_bytes = 1 * 1024 * 1024
         completed_bytes = 0
-        bytes_per_read = 1024
+        bytes_per_read = 64
 
         try:
             signal.signal(signal.SIGALRM, self.signal_handler)
