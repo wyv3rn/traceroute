@@ -8,7 +8,7 @@ for each hop for a specified host from geographically distant source(s).
 
 __author__ = 'Dazzlepod (info@dazzlepod.com)'
 __copyright__ = 'Copyright (c) 2013 Dazzlepod'
-__version__ = '$Revision: #15 $'
+__version__ = '$Revision: #16 $'
 
 import datetime
 import json
@@ -26,13 +26,33 @@ from subprocess import Popen, PIPE
 
 class Traceroute(object):
     """Traceroute instance."""
-    def __init__(self, ip_address='8.8.8.8', tmp_dir='/tmp', no_geo=False, timeout=120, debug=False):
+    def __init__(self, ip_address='8.8.8.8', country='US', tmp_dir='/tmp', no_geo=False, timeout=120, debug=False):
         super(Traceroute, self).__init__()
+
         self.ip_address = ip_address
+        self.country = country
         self.tmp_dir = tmp_dir
         self.no_geo = no_geo
         self.timeout = timeout
         self.debug = debug
+
+        # Traceroute servers from traceroute.org
+        sources = {
+            'US': {
+                'url': 'http://www.net.princeton.edu/cgi-bin/traceroute.pl',
+                'post_data': {'target': self.ip_address},
+            },
+            'CH': {
+                'url': 'http://www.switch.ch/cgi-bin/network/nph-traceroute-opencms?destination=%s' % self.ip_address,
+                'post_data': None,
+            },
+            'JP': {
+                'url': 'http://www.harenet.ad.jp/cgi-bin/harenet/traceroute/traceroute.cgi',
+                'post_data': {'host': self.ip_address},
+            },
+        }
+        self.source = sources[self.country]
+
         # cache geocoded IP addresses during the lifetime of this instance
         self.locations = {}
 
@@ -42,7 +62,7 @@ class Traceroute(object):
         that are listed at traceroute.org. For each hop, we will then attach
         geolocation information to it."""
         self.print_debug("ip_address = %s" % self.ip_address)
-        txt = os.path.join(self.tmp_dir, '%s.txt' % self.ip_address)
+        txt = os.path.join(self.tmp_dir, '%s.%s.txt' % (self.ip_address, self.country))
         if not os.path.exists(txt):
             (status_code, traceroute) = self.get_traceroute_output()
             f = open(txt, 'w')
@@ -65,10 +85,9 @@ class Traceroute(object):
 
     def get_traceroute_output(self):
         """Fetch traceroute output from a webpage."""
+        url = self.source['url']
+        (status_code, content) = self.urlopen(url, context = self.source['post_data'])
 
-        # Example from traceroute.org
-        url = "http://www.net.princeton.edu/cgi-bin/traceroute.pl"
-        (status_code, content) = self.urlopen(url, context = {'target': self.ip_address})
         content = content.strip()
 
         pattern = re.compile(r'<pre.*?>(?P<traceroute>.*?)</pre>', re.DOTALL|re.IGNORECASE)
@@ -242,6 +261,10 @@ def main():
     usage = """%prog --ip_address=IP_ADDRESS"""
     cmdparser = optparse.OptionParser(usage, version=("traceroute " + __version__))
     cmdparser.add_option("-i", "--ip_address", type="string", default="8.8.8.8", help="IP address of destination host (default: 8.8.8.8)")
+    cmdparser.add_option("-c", "--country", type="choice",
+        choices=['US', 'CH', 'JP',],
+        default="US",
+        help="Traceroute will be initiated from this country (default: US)")
     cmdparser.add_option("-t", "--tmp_dir", type="string", default="/tmp", help="Temporary directory to store downloaded traceroute results (default: /tmp)")
     cmdparser.add_option("-n", "--no_geo", action="store_true", default=False, help="No geolocation data (default: False)")
     cmdparser.add_option("-s", "--timeout", type="int", default=120, help="Timeout in seconds for all downloads (default: 120)")
@@ -250,7 +273,12 @@ def main():
     (options, args) = cmdparser.parse_args()
 
     if options.ip_address:
-        traceroute = Traceroute(ip_address=options.ip_address, tmp_dir=options.tmp_dir, no_geo=options.no_geo, timeout=options.timeout, debug=options.debug)
+        traceroute = Traceroute(ip_address=options.ip_address,
+            country=options.country,
+            tmp_dir=options.tmp_dir,
+            no_geo=options.no_geo,
+            timeout=options.timeout,
+            debug=options.debug)
         hops = traceroute.traceroute()
         hops = json.dumps(hops, indent=4)
         print hops
