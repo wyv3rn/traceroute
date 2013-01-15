@@ -8,7 +8,7 @@ for each hop for a specified host from geographically distant source(s).
 
 __author__ = 'Dazzlepod (info@dazzlepod.com)'
 __copyright__ = 'Copyright (c) 2013 Dazzlepod'
-__version__ = '$Revision: #14 $'
+__version__ = '$Revision: #15 $'
 
 import datetime
 import json
@@ -178,6 +178,8 @@ class Traceroute(object):
         status code and response."""
         status_code = 200
         request = urllib2.Request(url = url)
+        request.add_header('User-Agent', 'traceroute/1.0 (+https://github.com/ayeowch/traceroute')
+
         if context:
             data = urllib.urlencode(context)
             request.add_data(data)
