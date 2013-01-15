@@ -26,6 +26,9 @@ You can also run the script directly by passing in the --ip_address option:
       -h, --help            show this help message and exit
       -i IP_ADDRESS, --ip_address=IP_ADDRESS
                             IP address of destination host (default: 8.8.8.8)
+      -c COUNTRY, --country=COUNTRY
+                            Traceroute will be initiated from this country
+                            (default: US)
       -t TMP_DIR, --tmp_dir=TMP_DIR
                             Temporary directory to store downloaded traceroute
                             results (default: /tmp)
