@@ -8,7 +8,7 @@ for each hop for a specified host from geographically distant source(s).
 
 __author__ = 'Dazzlepod (info@dazzlepod.com)'
 __copyright__ = 'Copyright (c) 2013 Dazzlepod'
-__version__ = '$Revision: #16 $'
+__version__ = '$Revision: #18 $'
 
 import datetime
 import json
@@ -50,6 +50,11 @@ class Traceroute(object):
                 'url': 'http://www.harenet.ad.jp/cgi-bin/harenet/traceroute/traceroute.cgi',
                 'post_data': {'host': self.ip_address},
             },
+            # 'LO' for localhost in which case 'url' will be used as the command to execute traceroute locally
+            'LO': {
+                'url': 'traceroute %s' % self.ip_address,
+                'post_data': None,
+            },
         }
         self.source = sources[self.country]
 
@@ -64,7 +69,14 @@ class Traceroute(object):
         self.print_debug("ip_address = %s" % self.ip_address)
         txt = os.path.join(self.tmp_dir, '%s.%s.txt' % (self.ip_address, self.country))
         if not os.path.exists(txt):
-            (status_code, traceroute) = self.get_traceroute_output()
+            if self.country == 'LO':
+                (status_code, traceroute) = self.execute_cmd(self.source['url'])
+            else:
+                (status_code, traceroute) = self.get_traceroute_output()
+
+            if status_code != 0 and status_code != 200:
+                return {'error': status_code}
+
             f = open(txt, 'w')
             f.write(traceroute)
             f.close()
@@ -192,6 +204,23 @@ class Traceroute(object):
                 location = tmp_location
         return location
 
+    def execute_cmd(self, cmd):
+        """Execute the specified command locally and return the resultant
+        return code and output."""
+        stdout = ''
+        returncode = -1
+        p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        try:
+            signal.signal(signal.SIGALRM, self.signal_handler)
+            signal.alarm(self.timeout)
+            stdout, stderr = p.communicate()
+            returncode = p.returncode
+            self.print_debug("cmd = %s, returncode = %d" % (cmd, returncode))
+            signal.alarm(0)
+        except Exception, e:
+            self.print_debug("%s" % str(e))
+        return (returncode, stdout)
+
     def urlopen(self, url, context=None):
         """Perform HTTP GET/POST on the specified URL and return the resultant
         status code and response."""
@@ -262,9 +291,9 @@ def main():
     cmdparser = optparse.OptionParser(usage, version=("traceroute " + __version__))
     cmdparser.add_option("-i", "--ip_address", type="string", default="8.8.8.8", help="IP address of destination host (default: 8.8.8.8)")
     cmdparser.add_option("-c", "--country", type="choice",
-        choices=['US', 'CH', 'JP',],
+        choices=['US', 'CH', 'JP', 'LO',],
         default="US",
-        help="Traceroute will be initiated from this country (default: US)")
+        help="Traceroute will be initiated from this country; choose 'US' for United States, 'CH' for Switzerland, 'JP' for Japan or 'LO' for localhost to run traceroute locally (default: US)")
     cmdparser.add_option("-t", "--tmp_dir", type="string", default="/tmp", help="Temporary directory to store downloaded traceroute results (default: /tmp)")
     cmdparser.add_option("-n", "--no_geo", action="store_true", default=False, help="No geolocation data (default: False)")
     cmdparser.add_option("-s", "--timeout", type="int", default=120, help="Timeout in seconds for all downloads (default: 120)")
