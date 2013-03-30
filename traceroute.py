@@ -8,7 +8,7 @@ for each hop for a specified host from geographically distant source(s).
 
 __author__ = 'Dazzlepod (info@dazzlepod.com)'
 __copyright__ = 'Copyright (c) 2013 Dazzlepod'
-__version__ = '$Revision: #18 $'
+__version__ = '$Revision: #20 $'
 
 import datetime
 import json
@@ -38,18 +38,6 @@ class Traceroute(object):
 
         # Traceroute servers from traceroute.org
         sources = {
-            'US': {
-                'url': 'http://www.net.princeton.edu/cgi-bin/traceroute.pl',
-                'post_data': {'target': self.ip_address},
-            },
-            'CH': {
-                'url': 'http://www.switch.ch/cgi-bin/network/nph-traceroute-opencms?destination=%s' % self.ip_address,
-                'post_data': None,
-            },
-            'JP': {
-                'url': 'http://www.harenet.ad.jp/cgi-bin/harenet/traceroute/traceroute.cgi',
-                'post_data': {'host': self.ip_address},
-            },
             # 'LO' for localhost in which case 'url' will be used as the command to execute traceroute locally
             'LO': {
                 'url': 'traceroute %s' % self.ip_address,
@@ -59,6 +47,14 @@ class Traceroute(object):
                 'url': 'http://by104.activeby.net/lg/',
                 'post_data': {'method': 'trace', 'host': self.ip_address, 'router': 'http://by104.activeby.net/lg/'}
             },
+            'CH': {
+                'url': 'http://www.switch.ch/cgi-bin/network/nph-traceroute-opencms?destination=%s' % self.ip_address,
+                'post_data': None,
+            },
+            'JP': {
+                'url': 'http://www.harenet.ad.jp/cgi-bin/harenet/traceroute/traceroute.cgi',
+                'post_data': {'host': self.ip_address},
+            },
             'RU': {
                 'url': 'http://ipnoc.zenon.net/pcgi/trace.pl?IP=%s' % self.ip_address,
                 'post_data': None
@@ -66,7 +62,11 @@ class Traceroute(object):
             'UK': {
                 'url': 'http://ab.newnet.co.uk/cgi-bin/traceroute?%s' % self.ip_address,
                 'post_data': None
-            }
+            },
+            'US': {
+                'url': 'http://www.net.princeton.edu/cgi-bin/traceroute.pl',
+                'post_data': {'target': self.ip_address},
+            },
         }
         self.source = sources[self.country]
 
@@ -208,7 +208,7 @@ class Traceroute(object):
             "longitude": -96.8353}
         """
         location = None
-        url = "https://dazzlepod.com/ip/%s.json" % ip_address
+        url = "http://dazzlepod.com/ip/%s.json" % ip_address
         (status_code, json_data) = self.urlopen(url)
         if status_code == 200 and json_data:
             tmp_location = json.loads(json_data)
@@ -303,9 +303,9 @@ def main():
     cmdparser = optparse.OptionParser(usage, version=("traceroute " + __version__))
     cmdparser.add_option("-i", "--ip_address", type="string", default="8.8.8.8", help="IP address of destination host (default: 8.8.8.8)")
     cmdparser.add_option("-c", "--country", type="choice",
-        choices=['US', 'CH', 'JP', 'LO', 'BY', 'RU', 'UK'],
+        choices=['LO', 'BY', 'CH', 'JP', 'RU', 'UK', 'US',],
         default="US",
-        help="Traceroute will be initiated from this country; choose 'US' for United States, 'CH' for Switzerland, 'JP' for Japan or 'LO' for localhost to run traceroute locally (default: US)")
+        help="Traceroute will be initiated from this country; choose 'LO' for localhost to run traceroute locally, 'BY' for Belarus, 'CH' for Switzerland, 'JP' for Japan, 'RU' for Russia, 'UK' for United Kingdom or 'US' for United States (default: US)")
     cmdparser.add_option("-t", "--tmp_dir", type="string", default="/tmp", help="Temporary directory to store downloaded traceroute results (default: /tmp)")
     cmdparser.add_option("-n", "--no_geo", action="store_true", default=False, help="No geolocation data (default: False)")
     cmdparser.add_option("-s", "--timeout", type="int", default=120, help="Timeout in seconds for all downloads (default: 120)")
