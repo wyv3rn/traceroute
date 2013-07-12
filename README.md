@@ -1,5 +1,5 @@
 # traceroute
-Traceroute is a Python script that allows you to get traceroute results with associated geolocation information for each hop for a specified host from geographically distant source(s). Demo: [IP Address Lookup](http://dazzlepod.com/ip/) (under "Visual Traceroute" tab)
+Multi-source traceroute with geolocation information. Demo: [IP Address Lookup](http://dazzlepod.com/ip/) (under "Visual Traceroute" tab)
 
 ![Using output from traceroute.py to plot hops on Google Map](https://raw.github.com/ayeowch/traceroute/master/screenshot.png)
 
