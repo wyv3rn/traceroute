@@ -46,55 +46,17 @@ class Traceroute(object):
     """
     Multi-source traceroute instance.
     """
-    def __init__(self, ip_address="8.8.8.8", country="US", tmp_dir="/tmp",
-                 no_geo=False, timeout=120, debug=False):
+    def __init__(self, ip_address, source="sources.json", country="US",
+                 tmp_dir="/tmp", no_geo=False, timeout=120, debug=False):
         super(Traceroute, self).__init__()
         self.ip_address = ip_address
+        self.source = source
         self.country = country
         self.tmp_dir = tmp_dir
         self.no_geo = no_geo
         self.timeout = timeout
         self.debug = debug
-
-        # Traceroute servers from traceroute.org
-        sources = {
-            'LO': {
-                'url': "traceroute {}".format(ip_address),
-            },
-            'BY': {
-                'url': "http://by104.activeby.net/lg/",
-                'post_data': {
-                    'method': "trace",
-                    'host': ip_address,
-                },
-            },
-            'CH': {
-                'url': ("http://www.switch.ch/cgi-bin/network/nph-traceroute"
-                        "-opencms?destination={}".format(ip_address)),
-            },
-            'JP': {
-                'url': ("http://www.harenet.ad.jp/cgi-bin/harenet/traceroute/"
-                        "traceroute.cgi"),
-                'post_data': {
-                    'host': ip_address,
-                },
-            },
-            'RU': {
-                'url': "http://traceroute.rusnet.ru/?{}".format(ip_address)
-            },
-            'UK': {
-                'url': ("http://ab.newnet.co.uk/cgi-bin/traceroute?{}".format(
-                        ip_address)),
-            },
-            'US': {
-                'url': "http://www.net.princeton.edu/cgi-bin/traceroute.pl",
-                'post_data': {
-                    'target': ip_address,
-                },
-            },
-        }
-        self.source = sources[self.country]
-        self.locations = {}  # Geo-coded locations
+        self.locations = {}
 
     def traceroute(self):
         """
@@ -319,6 +281,9 @@ def main():
         "-i", "--ip_address", type="string", default="8.8.8.8",
         help="IP address of destination host (default: 8.8.8.8)")
     cmdparser.add_option(
+        "-j", "--json_file", type="string", default="sources.json",
+        help="List of sources in JSON file (default: sources.json)")
+    cmdparser.add_option(
         "-c", "--country", type="choice", default="US",
         choices=["LO", "BY", "CH", "JP", "RU", "UK", "US"],
         help=("Traceroute will be initiated from this country; choose 'LO' "
@@ -339,17 +304,17 @@ def main():
         "-d", "--debug", action="store_true", default=False,
         help="Show debug output (default: False)")
     options, _ = cmdparser.parse_args()
-    if options.ip_address:
-        traceroute = Traceroute(ip_address=options.ip_address,
-                                country=options.country,
-                                tmp_dir=options.tmp_dir,
-                                no_geo=options.no_geo,
-                                timeout=options.timeout,
-                                debug=options.debug)
-        hops = traceroute.traceroute()
-        print(json.dumps(hops, indent=4))
-    else:
-        cmdparser.print_usage()
+    json_file = open(options.json_file, "r").read()
+    sources = json.loads(json_file.replace("_IP_ADDRESS_", options.ip_address))
+    traceroute = Traceroute(ip_address=options.ip_address,
+                            source=sources[options.country],
+                            country=options.country,
+                            tmp_dir=options.tmp_dir,
+                            no_geo=options.no_geo,
+                            timeout=options.timeout,
+                            debug=options.debug)
+    hops = traceroute.traceroute()
+    print(json.dumps(hops, indent=4))
     return 0
 
 

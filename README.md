@@ -12,10 +12,10 @@ Save traceroute.py into a directory with its path stored in your PYTHONPATH envi
 Try the following from your Python interpreter:
 
     >>> from traceroute import Traceroute
-    >>> traceroute = Traceroute(ip_address='8.8.8.8')
+    >>> traceroute = Traceroute("8.8.8.8")
     >>> hops = traceroute.traceroute()
     >>> hops
-    [{'hostname': 'gigagate1', 'longitude': -74.6597, 'rtt': '0.700 ms', 'hop_num': 1, 'latitude': 40.3756, 'ip_address': '128.112.128.114'}, {'hostname': 'vgate1', 'longitude': -74.6597, 'rtt': '0.375 ms', 'hop_num': 2, 'latitude': 40.3756, 'ip_address': '128.112.12.22'}, {'hostname': 'te-1-4-3998-pe01.philadelphia.pa.ibone.comcast.net', 'longitude': -75.3697, 'rtt': '18.296 ms', 'hop_num': 3, 'latitude': 40.3265, 'ip_address': '24.104.128.89'}, {'hostname': 'te-0-1-0-12-cr01.ashburn.va.ibone.comcast.net', 'longitude': -97.0, 'rtt': '28.446 ms', 'hop_num': 4, 'latitude': 38.0, 'ip_address': '68.86.84.177'}, {'hostname': 'pos-0-2-0-0-pe01.ashburn.va.ibone.comcast.net', 'longitude': -97.0, 'rtt': '21.968 ms', 'hop_num': 5, 'latitude': 38.0, 'ip_address': '68.86.86.70'}, {'hostname': '75.149.231.62', 'longitude': -97.0, 'rtt': '20.685 ms', 'hop_num': 6, 'latitude': 38.0, 'ip_address': '75.149.231.62'}, {'hostname': '209.85.252.80', 'longitude': -122.0574, 'rtt': '18.383 ms', 'hop_num': 7, 'latitude': 37.4192, 'ip_address': '209.85.252.80'}, {'hostname': '209.85.252.46', 'longitude': -122.0574, 'rtt': '18.541 ms', 'hop_num': 7, 'latitude': 37.4192, 'ip_address': '209.85.252.46'}, {'hostname': '209.85.252.80', 'longitude': -122.0574, 'rtt': '19.723 ms', 'hop_num': 7, 'latitude': 37.4192, 'ip_address': '209.85.252.80'}, {'hostname': '72.14.238.82', 'longitude': -122.0574, 'rtt': '15.124 ms', 'hop_num': 9, 'latitude': 37.4192, 'ip_address': '72.14.238.82'}, {'hostname': '72.14.238.16', 'longitude': -122.0574, 'rtt': '15.564 ms', 'hop_num': 9, 'latitude': 37.4192, 'ip_address': '72.14.238.16'}, {'hostname': '216.239.49.149', 'longitude': -122.0574, 'rtt': '23.253 ms', 'hop_num': 10, 'latitude': 37.4192, 'ip_address': '216.239.49.149'}, {'hostname': 'google-public-dns-a.google.com', 'longitude': -122.0574, 'rtt': '13.020 ms', 'hop_num': 11, 'latitude': 37.4192, 'ip_address': '8.8.8.8'}]
+    [{'hostname': 'gigagate1', 'longitude': -74.6597, 'rtt': '0.913 ms', 'hop_num': 1, 'latitude': 40.3756, 'ip_address': '128.112.128.114'}, {'hostname': 'vgate1', 'longitude': -74.6597, 'rtt': '0.498 ms', 'hop_num': 2, 'latitude': 40.3756, 'ip_address': '128.112.12.22'}, {'hostname': '38.122.150.1', 'longitude': -74.006, 'rtt': '4.087 ms', 'hop_num': 3, 'latitude': 40.7143, 'ip_address': '38.122.150.1'}, {'hostname': 'te4-3.ccr01.phl01.atlas.cogentco.com', 'longitude': -97.0, 'rtt': '3.469 ms', 'hop_num': 4, 'latitude': 38.0, 'ip_address': '66.28.4.233'}, {'hostname': 'te7-3.ccr01.phl01.atlas.cogentco.com', 'longitude': -97.0, 'rtt': '3.586 ms', 'hop_num': 4, 'latitude': 38.0, 'ip_address': '154.54.0.189'}, {'hostname': 'te4-1.ccr01.bwi01.atlas.cogentco.com', 'longitude': -97.0, 'rtt': '6.470 ms', 'hop_num': 5, 'latitude': 38.0, 'ip_address': '154.54.2.173'}, {'hostname': 'te7-2.ccr01.bwi01.atlas.cogentco.com', 'longitude': -97.0, 'rtt': '6.821 ms', 'hop_num': 5, 'latitude': 38.0, 'ip_address': '154.54.83.222'}, {'hostname': 'te4-1.ccr01.bwi01.atlas.cogentco.com', 'longitude': -97.0, 'rtt': '20.586 ms', 'hop_num': 5, 'latitude': 38.0, 'ip_address': '154.54.2.173'}, {'hostname': '38.122.63.14', 'longitude': -83.1763, 'rtt': '34.924 ms', 'hop_num': 8, 'latitude': 42.3223, 'ip_address': '38.122.63.14'}, {'hostname': '38.122.62.74', 'longitude': -95.3877, 'rtt': '8.072 ms', 'hop_num': 8, 'latitude': 29.6144, 'ip_address': '38.122.62.74'}, {'hostname': '38.122.63.14', 'longitude': -83.1763, 'rtt': '8.950 ms', 'hop_num': 8, 'latitude': 42.3223, 'ip_address': '38.122.63.14'}, {'hostname': '209.85.252.80', 'longitude': -122.0574, 'rtt': '20.619 ms', 'hop_num': 9, 'latitude': 37.4192, 'ip_address': '209.85.252.80'}, {'hostname': '209.85.252.46', 'longitude': -122.0574, 'rtt': '13.415 ms', 'hop_num': 9, 'latitude': 37.4192, 'ip_address': '209.85.252.46'}, {'hostname': '72.14.234.65', 'longitude': -74.006, 'rtt': '15.676 ms', 'hop_num': 12, 'latitude': 40.7143, 'ip_address': '72.14.234.65'}, {'hostname': '72.14.234.53', 'longitude': -122.0574, 'rtt': '16.844 ms', 'hop_num': 12, 'latitude': 37.4192, 'ip_address': '72.14.234.53'}, {'hostname': 'google-public-dns-a.google.com', 'longitude': -97.0, 'rtt': '16.960 ms', 'hop_num': 14, 'latitude': 38.0, 'ip_address': '8.8.8.8'}]
     >>>
 
 You can also run the script directly by passing in the --ip_address option:
@@ -24,10 +24,11 @@ You can also run the script directly by passing in the --ip_address option:
     Usage: traceroute.py --ip_address=IP_ADDRESS
 
     Options:
-      --version             show program's version number and exit
       -h, --help            show this help message and exit
       -i IP_ADDRESS, --ip_address=IP_ADDRESS
                             IP address of destination host (default: 8.8.8.8)
+      -j JSON_FILE, --json_file=JSON_FILE
+                            List of sources in JSON file (default: sources.json)
       -c COUNTRY, --country=COUNTRY
                             Traceroute will be initiated from this country; choose
                             'LO' for localhost to run traceroute locally, 'BY' for
@@ -47,7 +48,7 @@ You can also run the script directly by passing in the --ip_address option:
         {
             "hostname": "gigagate1",
             "longitude": -74.6597,
-            "rtt": "0.700 ms",
+            "rtt": "0.913 ms",
             "hop_num": 1,
             "latitude": 40.3756,
             "ip_address": "128.112.128.114"
@@ -55,97 +56,121 @@ You can also run the script directly by passing in the --ip_address option:
         {
             "hostname": "vgate1",
             "longitude": -74.6597,
-            "rtt": "0.375 ms",
+            "rtt": "0.498 ms",
             "hop_num": 2,
             "latitude": 40.3756,
             "ip_address": "128.112.12.22"
         },
         {
-            "hostname": "te-1-4-3998-pe01.philadelphia.pa.ibone.comcast.net",
-            "longitude": -75.3697,
-            "rtt": "18.296 ms",
+            "hostname": "38.122.150.1",
+            "longitude": -74.006,
+            "rtt": "4.087 ms",
             "hop_num": 3,
-            "latitude": 40.3265,
-            "ip_address": "24.104.128.89"
+            "latitude": 40.7143,
+            "ip_address": "38.122.150.1"
         },
         {
-            "hostname": "te-0-1-0-12-cr01.ashburn.va.ibone.comcast.net",
+            "hostname": "te4-3.ccr01.phl01.atlas.cogentco.com",
             "longitude": -97.0,
-            "rtt": "28.446 ms",
+            "rtt": "3.469 ms",
             "hop_num": 4,
             "latitude": 38.0,
-            "ip_address": "68.86.84.177"
+            "ip_address": "66.28.4.233"
         },
         {
-            "hostname": "pos-0-2-0-0-pe01.ashburn.va.ibone.comcast.net",
+            "hostname": "te7-3.ccr01.phl01.atlas.cogentco.com",
             "longitude": -97.0,
-            "rtt": "21.968 ms",
+            "rtt": "3.586 ms",
+            "hop_num": 4,
+            "latitude": 38.0,
+            "ip_address": "154.54.0.189"
+        },
+        {
+            "hostname": "te4-1.ccr01.bwi01.atlas.cogentco.com",
+            "longitude": -97.0,
+            "rtt": "6.470 ms",
             "hop_num": 5,
             "latitude": 38.0,
-            "ip_address": "68.86.86.70"
+            "ip_address": "154.54.2.173"
         },
         {
-            "hostname": "75.149.231.62",
+            "hostname": "te7-2.ccr01.bwi01.atlas.cogentco.com",
             "longitude": -97.0,
-            "rtt": "20.685 ms",
-            "hop_num": 6,
+            "rtt": "6.821 ms",
+            "hop_num": 5,
             "latitude": 38.0,
-            "ip_address": "75.149.231.62"
+            "ip_address": "154.54.83.222"
+        },
+        {
+            "hostname": "te4-1.ccr01.bwi01.atlas.cogentco.com",
+            "longitude": -97.0,
+            "rtt": "20.586 ms",
+            "hop_num": 5,
+            "latitude": 38.0,
+            "ip_address": "154.54.2.173"
+        },
+        {
+            "hostname": "38.122.63.14",
+            "longitude": -83.1763,
+            "rtt": "34.924 ms",
+            "hop_num": 8,
+            "latitude": 42.3223,
+            "ip_address": "38.122.63.14"
+        },
+        {
+            "hostname": "38.122.62.74",
+            "longitude": -95.3877,
+            "rtt": "8.072 ms",
+            "hop_num": 8,
+            "latitude": 29.6144,
+            "ip_address": "38.122.62.74"
+        },
+        {
+            "hostname": "38.122.63.14",
+            "longitude": -83.1763,
+            "rtt": "8.950 ms",
+            "hop_num": 8,
+            "latitude": 42.3223,
+            "ip_address": "38.122.63.14"
         },
         {
             "hostname": "209.85.252.80",
             "longitude": -122.0574,
-            "rtt": "18.383 ms",
-            "hop_num": 7,
+            "rtt": "20.619 ms",
+            "hop_num": 9,
             "latitude": 37.4192,
             "ip_address": "209.85.252.80"
         },
         {
             "hostname": "209.85.252.46",
             "longitude": -122.0574,
-            "rtt": "18.541 ms",
-            "hop_num": 7,
+            "rtt": "13.415 ms",
+            "hop_num": 9,
             "latitude": 37.4192,
             "ip_address": "209.85.252.46"
         },
         {
-            "hostname": "209.85.252.80",
-            "longitude": -122.0574,
-            "rtt": "19.723 ms",
-            "hop_num": 7,
-            "latitude": 37.4192,
-            "ip_address": "209.85.252.80"
+            "hostname": "72.14.234.65",
+            "longitude": -74.006,
+            "rtt": "15.676 ms",
+            "hop_num": 12,
+            "latitude": 40.7143,
+            "ip_address": "72.14.234.65"
         },
         {
-            "hostname": "72.14.238.82",
+            "hostname": "72.14.234.53",
             "longitude": -122.0574,
-            "rtt": "15.124 ms",
-            "hop_num": 9,
+            "rtt": "16.844 ms",
+            "hop_num": 12,
             "latitude": 37.4192,
-            "ip_address": "72.14.238.82"
-        },
-        {
-            "hostname": "72.14.238.16",
-            "longitude": -122.0574,
-            "rtt": "15.564 ms",
-            "hop_num": 9,
-            "latitude": 37.4192,
-            "ip_address": "72.14.238.16"
-        },
-        {
-            "hostname": "216.239.49.149",
-            "longitude": -122.0574,
-            "rtt": "23.253 ms",
-            "hop_num": 10,
-            "latitude": 37.4192,
-            "ip_address": "216.239.49.149"
+            "ip_address": "72.14.234.53"
         },
         {
             "hostname": "google-public-dns-a.google.com",
-            "longitude": -122.0574,
-            "rtt": "13.020 ms",
-            "hop_num": 11,
-            "latitude": 37.4192,
+            "longitude": -97.0,
+            "rtt": "16.960 ms",
+            "hop_num": 14,
+            "latitude": 38.0,
             "ip_address": "8.8.8.8"
         }
     ]
