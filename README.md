@@ -1,5 +1,5 @@
 # traceroute
-Multi-source traceroute with geolocation information. Demo: [IP Address Lookup](http://dazzlepod.com/ip/) (under "Visual Traceroute" tab)
+Multi-source traceroute with geolocation information. Demo: [IP Address Lookup](https://dazzlepod.com/ip/) (under "Traceroute" tab)
 
 ![Using output from traceroute.py to plot hops on Google Map](https://raw.github.com/ayeowch/traceroute/master/screenshot.png)
 
@@ -15,7 +15,7 @@ Try the following from your Python interpreter:
     >>> traceroute = Traceroute("8.8.8.8")
     >>> hops = traceroute.traceroute()
     >>> hops
-    [{'hostname': 'gigagate1', 'longitude': -74.6597, 'rtt': '0.913 ms', 'hop_num': 1, 'latitude': 40.3756, 'ip_address': '128.112.128.114'}, {'hostname': 'vgate1', 'longitude': -74.6597, 'rtt': '0.498 ms', 'hop_num': 2, 'latitude': 40.3756, 'ip_address': '128.112.12.22'}, {'hostname': '38.122.150.1', 'longitude': -74.006, 'rtt': '4.087 ms', 'hop_num': 3, 'latitude': 40.7143, 'ip_address': '38.122.150.1'}, {'hostname': 'te4-3.ccr01.phl01.atlas.cogentco.com', 'longitude': -97.0, 'rtt': '3.469 ms', 'hop_num': 4, 'latitude': 38.0, 'ip_address': '66.28.4.233'}, {'hostname': 'te7-3.ccr01.phl01.atlas.cogentco.com', 'longitude': -97.0, 'rtt': '3.586 ms', 'hop_num': 4, 'latitude': 38.0, 'ip_address': '154.54.0.189'}, {'hostname': 'te4-1.ccr01.bwi01.atlas.cogentco.com', 'longitude': -97.0, 'rtt': '6.470 ms', 'hop_num': 5, 'latitude': 38.0, 'ip_address': '154.54.2.173'}, {'hostname': 'te7-2.ccr01.bwi01.atlas.cogentco.com', 'longitude': -97.0, 'rtt': '6.821 ms', 'hop_num': 5, 'latitude': 38.0, 'ip_address': '154.54.83.222'}, {'hostname': 'te4-1.ccr01.bwi01.atlas.cogentco.com', 'longitude': -97.0, 'rtt': '20.586 ms', 'hop_num': 5, 'latitude': 38.0, 'ip_address': '154.54.2.173'}, {'hostname': '38.122.63.14', 'longitude': -83.1763, 'rtt': '34.924 ms', 'hop_num': 8, 'latitude': 42.3223, 'ip_address': '38.122.63.14'}, {'hostname': '38.122.62.74', 'longitude': -95.3877, 'rtt': '8.072 ms', 'hop_num': 8, 'latitude': 29.6144, 'ip_address': '38.122.62.74'}, {'hostname': '38.122.63.14', 'longitude': -83.1763, 'rtt': '8.950 ms', 'hop_num': 8, 'latitude': 42.3223, 'ip_address': '38.122.63.14'}, {'hostname': '209.85.252.80', 'longitude': -122.0574, 'rtt': '20.619 ms', 'hop_num': 9, 'latitude': 37.4192, 'ip_address': '209.85.252.80'}, {'hostname': '209.85.252.46', 'longitude': -122.0574, 'rtt': '13.415 ms', 'hop_num': 9, 'latitude': 37.4192, 'ip_address': '209.85.252.46'}, {'hostname': '72.14.234.65', 'longitude': -74.006, 'rtt': '15.676 ms', 'hop_num': 12, 'latitude': 40.7143, 'ip_address': '72.14.234.65'}, {'hostname': '72.14.234.53', 'longitude': -122.0574, 'rtt': '16.844 ms', 'hop_num': 12, 'latitude': 37.4192, 'ip_address': '72.14.234.53'}, {'hostname': 'google-public-dns-a.google.com', 'longitude': -97.0, 'rtt': '16.960 ms', 'hop_num': 14, 'latitude': 38.0, 'ip_address': '8.8.8.8'}]
+    [{'hostname': 'core-87-router', 'longitude': -74.6597, 'rtt': '2.208 ms', 'hop_num': 1, 'latitude': 40.3756, 'ip_address': '128.112.128.2'}, {'hostname': 'border-87-router', 'longitude': -74.6597, 'rtt': '0.422 ms', 'hop_num': 2, 'latitude': 40.3756, 'ip_address': '128.112.12.142'}, {'hostname': 'te0-0-1-1.204.rcr12.phl03.atlas.cogentco.com', 'longitude': -97.0, 'rtt': '3.775 ms', 'hop_num': 3, 'latitude': 38.0, 'ip_address': '38.122.150.1'}, {'hostname': 'te0-0-1-3.rcr21.phl01.atlas.cogentco.com', 'longitude': -97.0, 'rtt': '3.689 ms', 'hop_num': 4, 'latitude': 38.0, 'ip_address': '154.54.27.117'}, {'hostname': 'te0-0-1-3.rcr22.phl01.atlas.cogentco.com', 'longitude': -97.0, 'rtt': '4.340 ms', 'hop_num': 4, 'latitude': 38.0, 'ip_address': '66.28.4.233'}, {'hostname': 'te0-7-0-10.mpd22.dca01.atlas.cogentco.com', 'longitude': -97.0, 'rtt': '8.082 ms', 'hop_num': 5, 'latitude': 38.0, 'ip_address': '154.54.42.101'}, {'hostname': 'te0-7-0-10.ccr21.dca01.atlas.cogentco.com', 'longitude': -97.0, 'rtt': '7.860 ms', 'hop_num': 5, 'latitude': 38.0, 'ip_address': '154.54.42.89'}, {'hostname': 'be2112.ccr41.iad02.atlas.cogentco.com', 'longitude': -97.0, 'rtt': '8.628 ms', 'hop_num': 6, 'latitude': 38.0, 'ip_address': '154.54.5.233'}, {'hostname': '38.88.214.50', 'longitude': -97.0, 'rtt': '8.197 ms', 'hop_num': 7, 'latitude': 38.0, 'ip_address': '38.88.214.50'}, {'hostname': '209.85.255.1', 'longitude': -122.0574, 'rtt': '9.230 ms', 'hop_num': 8, 'latitude': 37.4192, 'ip_address': '209.85.255.1'}, {'hostname': '209.85.251.101', 'longitude': -122.0574, 'rtt': '9.719 ms', 'hop_num': 8, 'latitude': 37.4192, 'ip_address': '209.85.251.101'}, {'hostname': '216.239.51.11', 'longitude': -122.0574, 'rtt': '9.811 ms', 'hop_num': 9, 'latitude': 37.4192, 'ip_address': '216.239.51.11'}, {'hostname': '72.14.238.115', 'longitude': -122.0574, 'rtt': '10.142 ms', 'hop_num': 9, 'latitude': 37.4192, 'ip_address': '72.14.238.115'}, {'hostname': '216.239.51.101', 'longitude': -122.0574, 'rtt': '9.568 ms', 'hop_num': 9, 'latitude': 37.4192, 'ip_address': '216.239.51.101'}, {'hostname': 'google-public-dns-a.google.com', 'longitude': -122.0838, 'rtt': '9.127 ms', 'hop_num': 10, 'latitude': 37.386, 'ip_address': '8.8.8.8'}]
     >>>
 
 You can also run the script directly by passing in the --ip_address option:
@@ -46,140 +46,139 @@ You can also run the script directly by passing in the --ip_address option:
     $ python traceroute.py --ip_address=8.8.8.8
     [
         {
-            "hostname": "gigagate1",
+            "hostname": "core-87-router",
             "longitude": -74.6597,
-            "rtt": "0.913 ms",
+            "rtt": "3.035 ms",
             "hop_num": 1,
             "latitude": 40.3756,
-            "ip_address": "128.112.128.114"
+            "ip_address": "128.112.128.2"
         },
         {
-            "hostname": "vgate1",
+            "hostname": "border-87-router",
             "longitude": -74.6597,
-            "rtt": "0.498 ms",
+            "rtt": "3.440 ms",
             "hop_num": 2,
             "latitude": 40.3756,
-            "ip_address": "128.112.12.22"
+            "ip_address": "128.112.12.142"
         },
         {
-            "hostname": "38.122.150.1",
-            "longitude": -74.006,
-            "rtt": "4.087 ms",
+            "hostname": "te0-0-1-1.204.rcr12.phl03.atlas.cogentco.com",
+            "longitude": -97.0,
+            "rtt": "3.588 ms",
             "hop_num": 3,
-            "latitude": 40.7143,
+            "latitude": 38.0,
             "ip_address": "38.122.150.1"
         },
         {
-            "hostname": "te4-3.ccr01.phl01.atlas.cogentco.com",
+            "hostname": "te0-0-1-3.rcr22.phl01.atlas.cogentco.com",
             "longitude": -97.0,
-            "rtt": "3.469 ms",
+            "rtt": "3.441 ms",
             "hop_num": 4,
             "latitude": 38.0,
             "ip_address": "66.28.4.233"
         },
         {
-            "hostname": "te7-3.ccr01.phl01.atlas.cogentco.com",
+            "hostname": "te0-7-0-10.mpd22.dca01.atlas.cogentco.com",
             "longitude": -97.0,
-            "rtt": "3.586 ms",
-            "hop_num": 4,
-            "latitude": 38.0,
-            "ip_address": "154.54.0.189"
-        },
-        {
-            "hostname": "te4-1.ccr01.bwi01.atlas.cogentco.com",
-            "longitude": -97.0,
-            "rtt": "6.470 ms",
+            "rtt": "7.455 ms",
             "hop_num": 5,
             "latitude": 38.0,
-            "ip_address": "154.54.2.173"
+            "ip_address": "154.54.42.101"
         },
         {
-            "hostname": "te7-2.ccr01.bwi01.atlas.cogentco.com",
+            "hostname": "te0-7-0-10.ccr21.dca01.atlas.cogentco.com",
             "longitude": -97.0,
-            "rtt": "6.821 ms",
+            "rtt": "7.573 ms",
             "hop_num": 5,
             "latitude": 38.0,
-            "ip_address": "154.54.83.222"
+            "ip_address": "154.54.42.89"
         },
         {
-            "hostname": "te4-1.ccr01.bwi01.atlas.cogentco.com",
+            "hostname": "te0-7-0-10.mpd22.dca01.atlas.cogentco.com",
             "longitude": -97.0,
-            "rtt": "20.586 ms",
+            "rtt": "7.521 ms",
             "hop_num": 5,
             "latitude": 38.0,
-            "ip_address": "154.54.2.173"
+            "ip_address": "154.54.42.101"
         },
         {
-            "hostname": "38.122.63.14",
-            "longitude": -83.1763,
-            "rtt": "34.924 ms",
-            "hop_num": 8,
-            "latitude": 42.3223,
-            "ip_address": "38.122.63.14"
+            "hostname": "be2112.ccr41.iad02.atlas.cogentco.com",
+            "longitude": -97.0,
+            "rtt": "8.611 ms",
+            "hop_num": 6,
+            "latitude": 38.0,
+            "ip_address": "154.54.5.233"
         },
         {
-            "hostname": "38.122.62.74",
-            "longitude": -95.3877,
-            "rtt": "8.072 ms",
-            "hop_num": 8,
-            "latitude": 29.6144,
-            "ip_address": "38.122.62.74"
+            "hostname": "be2176.ccr41.iad02.atlas.cogentco.com",
+            "longitude": -97.0,
+            "rtt": "8.640 ms",
+            "hop_num": 6,
+            "latitude": 38.0,
+            "ip_address": "154.54.41.53"
         },
         {
-            "hostname": "38.122.63.14",
-            "longitude": -83.1763,
-            "rtt": "8.950 ms",
-            "hop_num": 8,
-            "latitude": 42.3223,
-            "ip_address": "38.122.63.14"
+            "hostname": "38.88.214.50",
+            "longitude": -97.0,
+            "rtt": "8.655 ms",
+            "hop_num": 7,
+            "latitude": 38.0,
+            "ip_address": "38.88.214.50"
         },
         {
-            "hostname": "209.85.252.80",
+            "hostname": "209.85.251.101",
             "longitude": -122.0574,
-            "rtt": "20.619 ms",
+            "rtt": "9.783 ms",
+            "hop_num": 8,
+            "latitude": 37.4192,
+            "ip_address": "209.85.251.101"
+        },
+        {
+            "hostname": "209.85.246.227",
+            "longitude": -122.0574,
+            "rtt": "9.313 ms",
+            "hop_num": 8,
+            "latitude": 37.4192,
+            "ip_address": "209.85.246.227"
+        },
+        {
+            "hostname": "209.85.246.225",
+            "longitude": -122.0574,
+            "rtt": "8.308 ms",
+            "hop_num": 8,
+            "latitude": 37.4192,
+            "ip_address": "209.85.246.225"
+        },
+        {
+            "hostname": "216.239.51.101",
+            "longitude": -122.0574,
+            "rtt": "12.102 ms",
             "hop_num": 9,
             "latitude": 37.4192,
-            "ip_address": "209.85.252.80"
+            "ip_address": "216.239.51.101"
         },
         {
-            "hostname": "209.85.252.46",
+            "hostname": "216-239-51-13.google.com",
             "longitude": -122.0574,
-            "rtt": "13.415 ms",
+            "rtt": "8.993 ms",
             "hop_num": 9,
             "latitude": 37.4192,
-            "ip_address": "209.85.252.46"
+            "ip_address": "216.239.51.13"
         },
         {
-            "hostname": "72.14.234.65",
-            "longitude": -74.006,
-            "rtt": "15.676 ms",
-            "hop_num": 12,
-            "latitude": 40.7143,
-            "ip_address": "72.14.234.65"
-        },
-        {
-            "hostname": "72.14.234.53",
+            "hostname": "216.239.51.9",
             "longitude": -122.0574,
-            "rtt": "16.844 ms",
-            "hop_num": 12,
+            "rtt": "8.731 ms",
+            "hop_num": 9,
             "latitude": 37.4192,
-            "ip_address": "72.14.234.53"
+            "ip_address": "216.239.51.9"
         },
         {
             "hostname": "google-public-dns-a.google.com",
-            "longitude": -97.0,
-            "rtt": "16.960 ms",
-            "hop_num": 14,
-            "latitude": 38.0,
+            "longitude": -122.0838,
+            "rtt": "8.775 ms",
+            "hop_num": 10,
+            "latitude": 37.386,
             "ip_address": "8.8.8.8"
         }
     ]
-
-## License
-Copyright (c) 2013 Addy Yeow Chin Heng &lt;ayeowch@gmail.com&gt;
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

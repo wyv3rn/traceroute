@@ -1,28 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#
-# traceroute.py - Multi-source traceroute with geolocation information.
-#
-# Copyright (c) 2013 Addy Yeow Chin Heng <ayeowch@gmail.com>
-#
-# Permission is hereby granted, free of charge, to any person obtaining
-# a copy of this software and associated documentation files (the
-# "Software"), to deal in the Software without restriction, including
-# without limitation the rights to use, copy, modify, merge, publish,
-# distribute, sublicense, and/or sell copies of the Software, and to
-# permit persons to whom the Software is furnished to do so, subject to
-# the following conditions:
-#
-# The above copyright notice and this permission notice shall be
-# included in all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 """
 Multi-source traceroute with geolocation information.
@@ -46,11 +23,15 @@ class Traceroute(object):
     """
     Multi-source traceroute instance.
     """
-    def __init__(self, ip_address, source="sources.json", country="US",
-                 tmp_dir="/tmp", no_geo=False, timeout=120, debug=False):
+    def __init__(self, ip_address, source=None, country="US", tmp_dir="/tmp",
+                 no_geo=False, timeout=120, debug=False):
         super(Traceroute, self).__init__()
         self.ip_address = ip_address
         self.source = source
+        if self.source is None:
+            json_file = open("sources.json", "r").read()
+            sources = json.loads(json_file.replace("_IP_ADDRESS_", ip_address))
+            self.source = sources[country]
         self.country = country
         self.tmp_dir = tmp_dir
         self.no_geo = no_geo

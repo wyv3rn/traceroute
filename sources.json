@@ -7,11 +7,11 @@
         "post_data": {"method": "trace", "host": "_IP_ADDRESS_"}
     },
     "CH": {
-        "url": "http://www.switch.ch/cgi-bin/network/nph-traceroute-opencms?destination=_IP_ADDRESS_"
+        "url": "http://www.switch.ch/cgi-bin/network/nph-traceroute-ip?destination=_IP_ADDRESS_"
     },
     "JP": {
-        "url": "http://www.harenet.ad.jp/cgi-bin/harenet/traceroute/traceroute.cgi",
-        "post_data": {"host": "_IP_ADDRESS_"}
+        "url": "http://lg01.colo01.bbtower.ad.jp/cgi-bin/lg.cgi",
+        "post_data": {"CMD": "traceroute", "ARG": "_IP_ADDRESS_"}
     },
     "RU": {
         "url": "http://traceroute.rusnet.ru/?_IP_ADDRESS_"
@@ -20,7 +20,7 @@
         "url": "http://ab.newnet.co.uk/cgi-bin/traceroute?_IP_ADDRESS_"
     },
     "US": {
-        "url": "http://www.net.princeton.edu/cgi-bin/traceroute.pl",
-        "post_data": {"target": "_IP_ADDRESS_"}
+        "url": "https://www.net.princeton.edu/cgi-bin/traceroute.pl",
+        "post_data": {"cmd": "Go", "target": "_IP_ADDRESS_"}
     }
 }
