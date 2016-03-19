@@ -31,8 +31,8 @@ You can also run the script directly by passing in the --ip_address option:
                             List of sources in JSON file (default: sources.json)
       -c COUNTRY, --country=COUNTRY
                             Traceroute will be initiated from this country; choose
-                            'LO' for localhost to run traceroute locally, 'BY' for
-                            Belarus, 'CH' for Switzerland, 'JP' for Japan, 'RU'
+                            'LO' for localhost to run traceroute locally, 'AU' for
+                            Australia, 'CH' for Switzerland, 'JP' for Japan, 'RU'
                             for Russia, 'UK' for United Kingdom or 'US' for United
                             States (default: US)
       -t TMP_DIR, --tmp_dir=TMP_DIR

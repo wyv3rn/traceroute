@@ -2,9 +2,9 @@
     "LO": {
         "url": "traceroute _IP_ADDRESS_"
     },
-    "BY": {
-        "url": "http://by104.activeby.net/lg/",
-        "post_data": {"method": "trace", "host": "_IP_ADDRESS_"}
+    "AU": {
+        "url": "https://www.telstra.net/cgi-bin/trace",
+        "post_data": {"destination": "_IP_ADDRESS_"}
     },
     "CH": {
         "url": "http://www.switch.ch/cgi-bin/network/nph-traceroute-ip?destination=_IP_ADDRESS_"
@@ -17,7 +17,7 @@
         "url": "http://traceroute.rusnet.ru/?_IP_ADDRESS_"
     },
     "UK": {
-        "url": "http://ab.newnet.co.uk/cgi-bin/traceroute?_IP_ADDRESS_"
+        "url": "http://traceroute.dsvr.co.uk/cgi-bin/trace.pl?t=_IP_ADDRESS_"
     },
     "US": {
         "url": "https://www.net.princeton.edu/cgi-bin/traceroute.pl",

@@ -86,12 +86,17 @@ class Traceroute(object):
         content = content.strip()
         regex = r'<pre.*?>(?P<traceroute>.*?)</pre>'
         pattern = re.compile(regex, re.DOTALL | re.IGNORECASE)
-        try:
-            traceroute = re.findall(pattern, content)[0].strip()
-        except IndexError:
+        matches = re.findall(pattern, content)
+        if not matches:
             # Manually append closing </pre> for partially downloaded page
             content = "{}</pre>".format(content)
-            traceroute = re.findall(pattern, content)[0].strip()
+            matches = re.findall(pattern, content)
+        traceroute = ''
+        for match in matches:
+            match  = match.strip()
+            if match and 'ms' in match.lower():
+                traceroute = match
+                break
         return (status_code, traceroute)
 
     def get_hops(self, traceroute):
@@ -242,7 +247,7 @@ class Traceroute(object):
             self.print_debug(str(err))
         return content
 
-    def signal_handler(self, signum):
+    def signal_handler(self, signum, frame):
         """
         Raises exception when signal is caught.
         """
@@ -266,11 +271,15 @@ def main():
         help="List of sources in JSON file (default: sources.json)")
     cmdparser.add_option(
         "-c", "--country", type="choice", default="US",
-        choices=["LO", "BY", "CH", "JP", "RU", "UK", "US"],
-        help=("Traceroute will be initiated from this country; choose 'LO' "
-              "for localhost to run traceroute locally, 'BY' for Belarus, "
-              "'CH' for Switzerland, 'JP' for Japan, 'RU' for Russia, 'UK' "
-              "for United Kingdom or 'US' for United States (default: US)"))
+        choices=["LO", "AU", "CH", "JP", "RU", "UK", "US"],
+        help=("Traceroute will be initiated from this country; choose "
+              "'LO' for localhost to run traceroute locally, "
+              "'AU' for Australia, "
+              "'CH' for Switzerland, "
+              "'JP' for Japan, "
+              "'RU' for Russia, "
+              "'UK' for United Kingdom or "
+              "'US' for United States (default: US)"))
     cmdparser.add_option(
         "-t", "--tmp_dir", type="string", default="/tmp",
         help=("Temporary directory to store downloaded traceroute results "
