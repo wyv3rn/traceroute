@@ -17,7 +17,7 @@
         "url": "http://traceroute.rusnet.ru/?_IP_ADDRESS_"
     },
     "UK": {
-        "url": "http://traceroute.dsvr.co.uk/cgi-bin/trace.pl?t=_IP_ADDRESS_"
+        "url": "http://www.erik.co.uk/lg/lg.cgi?input=_IP_ADDRESS_&mode=trace"
     },
     "US": {
         "url": "https://www.net.princeton.edu/cgi-bin/traceroute.pl",
