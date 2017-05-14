@@ -17,7 +17,8 @@
         "url": "http://ipnoc.zenon.net/pcgi/trace.pl?IP=_IP_ADDRESS_"
     },
     "UK": {
-        "url": "http://www.erik.co.uk/lg/lg.cgi?input=_IP_ADDRESS_&mode=trace"
+        "url": "http://lg.cerberus.net.uk/lg",
+        "post_data": {"mode": "trace", "input": "_IP_ADDRESS_"}
     },
     "US": {
         "url": "https://www.net.princeton.edu/cgi-bin/traceroute.pl",
