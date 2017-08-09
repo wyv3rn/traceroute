@@ -14,7 +14,7 @@
         "post_data": {"CMD": "traceroute", "ARG": "_IP_ADDRESS_"}
     },
     "RU": {
-        "url": "http://ipnoc.zenon.net/pcgi/trace.pl?IP=_IP_ADDRESS_"
+        "url": "http://lg.eltel.net/cgi-bin/LG.cgi?r=s&q=t&a=_IP_ADDRESS_"
     },
     "UK": {
         "url": "http://lg.cerberus.net.uk/lg",
