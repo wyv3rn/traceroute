@@ -1,6 +1,6 @@
 {
     "LO": {
-        "url": "traceroute _IP_ADDRESS_"
+        "url": "traceroute -A _IP_ADDRESS_"
     },
     "AU": {
         "url": "https://www.telstra.net/cgi-bin/trace",

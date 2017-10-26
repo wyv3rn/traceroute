@@ -24,7 +24,7 @@ class Traceroute(object):
     Multi-source traceroute instance.
     """
     def __init__(self, ip_address, source=None, country="US", tmp_dir="/tmp",
-                 no_geo=False, timeout=120, debug=False):
+                 no_geo=False, timeout=120, debug=False, cached=False):
         super(Traceroute, self).__init__()
         self.ip_address = ip_address
         self.source = source
@@ -38,6 +38,7 @@ class Traceroute(object):
         self.timeout = timeout
         self.debug = debug
         self.locations = {}
+        self.cached = cached
 
     def traceroute(self):
         """
@@ -51,7 +52,7 @@ class Traceroute(object):
         filename = "{}.{}.txt".format(self.ip_address, self.country)
         filepath = os.path.join(self.tmp_dir, filename)
 
-        if not os.path.exists(filepath):
+        if not self.cached or not os.path.exists(filepath):
             if self.country == "LO":
                 status_code, traceroute = self.execute_cmd(self.source['url'])
             else:
@@ -126,19 +127,23 @@ class Traceroute(object):
         We use this function to better represent the hosts data in a dict.
         """
         formatted_hops = []
-        regex = r'(?P<h>[\w.-]+) \((?P<i>[\d.]+)\) (?P<r>\d{1,4}.\d{1,4} ms)'
+        regex = r'(?P<h>[\w.-]+) \((?P<i>[\d.]+)\)(?: \[(?P<a>[AS\*\d/]+)\])? (?P<r>(\d{1,4}.\d{1,4} ms ?)+)'
         for hop in hops:
             hop_num = int(hop['hop_num'].strip())
-            hosts = hop['hosts'].replace("  ", " ").strip()
+            hosts = hop['hosts'].replace("  ", " ").replace(' *', '').strip()
             # Using re.findall(), we split the hosts, then for each host,
             # we store a tuple of hostname, IP address and the first RTT.
             hosts = re.findall(regex, hosts)
             for host in hosts:
+                rtt_info = host[3].replace(' ms', '').strip()
+                rtt_array = rtt_info.split(' ')
+                rtt_array.sort()
                 hop_context = {
                     'hop_num': hop_num,
                     'hostname': host[0],
                     'ip_address': host[1],
-                    'rtt': host[2],
+                    'as': host[2],
+                    'rtt': rtt_array[0], # min RTT
                 }
                 self.print_debug(hop_context)
                 formatted_hops.append(hop_context)
@@ -164,6 +169,7 @@ class Traceroute(object):
                     'hostname': hop['hostname'],
                     'ip_address': hop['ip_address'],
                     'rtt': hop['rtt'],
+                    'as': hop['as'],
                     'latitude': location['latitude'],
                     'longitude': location['longitude'],
                 })
@@ -293,6 +299,9 @@ def main():
     cmdparser.add_option(
         "-d", "--debug", action="store_true", default=False,
         help="Show debug output (default: False)")
+    cmdparser.add_option(
+        "--cached", action="store_true", default=False,
+        help="Use old tmp files instead of doing a new traceroute (default: False)")
     options, _ = cmdparser.parse_args()
     json_file = open(options.json_file, "r").read()
     sources = json.loads(json_file.replace("_IP_ADDRESS_", options.ip_address))
@@ -302,7 +311,8 @@ def main():
                             tmp_dir=options.tmp_dir,
                             no_geo=options.no_geo,
                             timeout=options.timeout,
-                            debug=options.debug)
+                            debug=options.debug,
+                            cached=options.cached)
     hops = traceroute.traceroute()
     print(json.dumps(hops, indent=4))
     return 0
